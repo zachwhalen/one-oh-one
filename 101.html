@@ -1,0 +1,347 @@
+<html>
+<head>
+	<title>101</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Goudy+Bookletter+1911|Alef:400,700' rel='stylesheet' type='text/css'>
+<!-- 
+
+	This page is a response to a "mediation" assignment designed for students in my After Books seminar. I call this mediation "P2P".
+
+	The idea of the assignment is to creatively juxtapose Bradbury's _Fahrenheit 451_ with Miller Jr.'s _A Canticle for Leibowitz_.
+
+	The rules are: choose one page from each and combine them in some interesting way.
+
+	For my P2P, I typed out the text from both books' page 101. I like the symmetry of that number.
+
+	Then, I turned those into Javascript variables as you can see below.
+
+	I set up some HTML and use some jQuery to populate a recto and verso page with the contents of those 
+	variables, alternately adding one word from _Fahrenheit_, then one from _Canticle_, back to _Fahrenheit_ and so on.
+	With those lists, I'm able to order and shuffle them in various ways, with different results. I've made 8 of these available
+	so far:
+
+	
+
+
+-->
+
+
+<script type="text/javascript">
+
+
+
+
+//http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffle(array) {
+  var currentIndex = array.length
+    , temporaryValue
+    , randomIndex
+    ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+	fahrenheit = "of those do-gooders with their shocked, holier-than-thou silences, their one talent making others feel guilty. They rise like the midnight sun to sweat you in your bed! The front door opened; Mildred came down the steps, running, one suitcase held with a dream-like clenching rigidity in her fist, as a beetle-taxi hissed to the curb. Mildred! She ran past with her body stuff, her face floured with powder, her mouth gone, without lipstick. Mildred, you didn't put in the alarm! She shoved the valise in the waiting beetle, climbed in, and sat mumbling, Poor family, poor family, oh everything gone, everything, everything gone now Beatty grabbed Montag's shoulder as the beetle blasted away and hit seventy miles an hour, far down the street, gone. There was a crash like the falling parts of a dream fashioned out of warped glass, mirrors, and crystal prisms. Montag drifted about as if still another incomprehensible storm had turned him, to see Stoneman and Black weilding axes, shattering window-panes to provide cross-ventilation. The brush of a death's head moth against a cold black screen. Montag, this is Faber. Do you hear me? What's happening? This is happening to me, said Montag. What a dreadful surprise, said Beatty, For everyone nowadays knows, absolutely is certain, that nothing will ever happen to me. Others die, I go on. There are no consequences and no responsibilities. Except that there are. But let's not talk about them, eh? By the time the consequences catch up with you, it's too late, isn't it, Montag? Montag, can you get away, run? asked Faber. Montag walked but did not feel his feet touch the cement and then the night grasses. Beatty flicked his";
+	canticle = "at least afford Heaven a chance to intervene in an unobtrusive way. O God, Thou who strengthened Jacob so that he overcame the angel on the rock... They squared off. Brother Francis crossed himself. The robber took his knife from his belt-thong and tossed it after the papers. They circled. Three seconds later, the monk lay groaning on the flat of his back under a short mountain of muscle. A sharp rock seemed to be severing his spine. Heh-heh, said the robber, and arose to reclaim his knife and roll up the documents. Hands folded as if in prayer, Brother Francis crept after him on his knees, begging at the top of his lungs. Please, then, take only one, not both! Please! You've got to buy it back now, the robber chortled, I won them fair enough. I have nothing, I am poor. That's all right, if you want them that bad, you'll get gold. Two heklos of gold, that's the ransom. Bring it here any time. I'll tuck your things in my shanty. You want them back, just bring the gold. Listen, they're important to other people, not to me. I was taking them to the pope. Maybe they'll pay you for the important one. But let me have the other one just to show them. It's of no importance at all. The robber lauhged over his sholder. I believe you'd kiss a boot to get it back. Brother Francis caught up with him and fervently kissed his boot. This proved too much for even such a fellow as the robber. He shoved the monk away with his foot, separated the two papers, and flung one of them in Francis' face with a curse. He climbed aboard the monk's donkey and started riding it up the slope toward the ambush. Brother Francis snatched up the precious document and hiked along beside the robber, thanking him profusely and blessing him repeatedly while the robber guided the ass toward the shrouded archers. Fifteen years! the robber snorted, and again shoved Francis away with his foot. Begone! He waved the illuminate splendor";
+	
+	function getURLParameter(name) {
+	    return decodeURI(
+	        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+	    );
+	}
+
+	lod = getURLParameter('lod');
+	explanation = '';
+
+	$(document).ready(function(){
+
+		if (lod == 'null'){
+
+			seed = Math.floor(Math.random() * 11) + 1;
+
+		}else{
+			seed = lod;
+		}
+
+
+		if (seed == 1){
+			fs = fahrenheit.split(' ');
+			cs = canticle.split(' ');
+			$(".mod").text('Naturally');
+			explanation = 'Text from page 101 of <cite>Canticle for Leibowitz</cite> and page 101 of <cite>Fahrenheit 451</cite>, interwoven in their natural orders.';
+
+		}
+		if (seed == 2){
+			fs = fahrenheit.split(' ').reverse();
+			cs = canticle.split(' ').reverse();
+			$(".mod").text('Naturally Reversed');
+			explanation = 'Text from page 101 of <cite>Canticle for Leibowitz</cite> and page 101 of <cite>Fahrenheit 451</cite>, interwoven in their reverse orders.';
+		}
+		if (seed == 3){
+			fs = fahrenheit.split(' ');
+			cs = canticle.split(' ').reverse();
+			$(".mod").text('One Reversed');
+			explanation = 'Text from page 101 of <cite>Canticle for Leibowitz</cite> and page 101 of <cite>Fahrenheit 451</cite>, interwoven  with <cite>Canticle</cite> in reverse order.';
+		}
+		if (seed == 4){
+			fs = fahrenheit.split(' ').reverse();
+			cs = canticle.split(' ');
+			$(".mod").text('The Other Reversed');
+			explanation = 'Text from page 101 of <cite>Canticle for Leibowitz</cite> and page 101 of <cite>Fahrenheit 451</cite>, interwoven  with <cite>Fahrenheit</cite> in reverse order.';
+		}
+	
+		if (seed == 5){
+			fs = shuffle(fahrenheit.split(' '));
+			cs = shuffle(canticle.split(' '));
+			$(".mod").text('Randomly');
+			explanation = 'Text from page 101 of <cite>Canticle for Leibowitz</cite> and page 101 of <cite>Fahrenheit 451</cite>, interwoven with <cite>Fahrenheit</cite> in random order.';
+		}
+		if (seed == 6){
+			fs = fahrenheit.split(' ').sort();
+			cs = canticle.split(' ').sort();
+			$(".mod").text('Alphabetically');
+			explanation = 'Text from page 101 of <cite>Canticle for Leibowitz</cite> and page 101 of <cite>Fahrenheit 451</cite>, interwoven in alphabetical order.';
+		}
+		if (seed == 7){
+			fs = fahrenheit.split(' ').sort().reverse();
+			cs = canticle.split(' ').sort();
+			$(".mod").text('Cross Crissed');
+			explanation = 'Text from page 101 of <cite>Canticle for Leibowitz</cite> and page 101 of <cite>Fahrenheit 451</cite>, interwoven alphabetically with <cite>Fahrenheit</cite> in reverse alphabetical order.';
+		}
+		if (seed == 8){
+			fs = fahrenheit.split(' ').sort();
+			cs = canticle.split(' ').sort().reverse();
+			$(".mod").text('Criss Crossed');
+			explanation = 'Text from page 101 of <cite>Canticle for Leibowitz</cite> and page 101 of <cite>Fahrenheit 451</cite>, interwoven alphabetically with <cite>Canticle</cite> in reverse alphabetical order.';
+		}
+		if (seed == 9){
+			fs = fahrenheit.split(' ');
+			cs = canticle.split(' ');
+			$(".mod").text('Normal');
+			$('.page.verso').append(fahrenheit);
+			$('.page.recto').append(canticle);
+		}
+		// if (seed == 10){
+		// 	fs = fahrenheit.split('');
+		// 	cs = canticle.split('');
+		// 	$(".mod").text('Normal');
+		// 	var nonspace = /\S/i;
+		// 	for (var w = 0; w < fs.length; w++){
+
+
+		// 		if (fs[w].match(nonspace) & cs[w].match(nonspace)){
+		// 			fs[w] = ' ';
+		// 			cs[w] = ' ';
+
+		// 		}
+		// 	}
+
+		// 	$(".page").css({'font-family' : 'Courier'});
+
+
+		// }
+		if (seed == 10){
+			fh = fahrenheit.split('');
+			ch = canticle.split('');
+			$(".mod").text('Burn');
+
+			for (var l = 0; l <= fahrenheit.length; l++){
+			 	if (fh[l] == ch[l]){
+					$('.page.verso').append(fh[l]);
+				}else{
+					$('.page.verso').append("&nbsp;");
+			 	}
+			}
+			explanation = "Imagine that both pages are semi transparent and overlapping. Every time the same letter appears in the same location, you see it here."
+
+		}
+		if (seed == 11){
+			//fs = fahrenheit.split('');
+			//cs = canticle.split('');
+			explanation = "Brother Sarl has 'worked out a mathematical method for finding the missing words. It's not foolproof, but it works to some degree.'";
+
+			txt = fahrenheit + canticle;
+			$(".mod").text('Brother Sarl');
+
+			list = txt.split(" ");			
+			var data = new Object;
+
+			// make the database
+			for (var d = 0; d <= list.length; d++){  
+				if (typeof data[list[d]] == 'undefined'){
+					data[list[d]] = [];
+				}			
+				data[list[d]].push(list[d+1]);
+			}
+
+			// make a string out of it
+			// pick a random token to start it with
+			var seed = list[Math.floor(Math.random() * list.length)];
+
+			var newtxt = [seed];
+
+			// build it token by token until there's nothing valid to add 
+			// or until it's long enough
+			while (newtxt.length < list.length & typeof data[seed] != 'undefined' & seed != 'undefined'){
+				var next = data[seed][Math.floor(Math.random() * data[seed].length) ];
+			
+					newtxt.push(next);
+					seed = next;
+				
+			}
+			// send it to the page
+			for(var n = 0; n < newtxt.length; n++){
+				if (String(newtxt[n]) !== 'undefined'){
+					if (n < newtxt.length / 2){
+						$('.page.verso').append(newtxt[n] + " ");
+					}else{
+						$('.page.recto').append(newtxt[n] + " ");
+					}
+				}
+			}
+			
+		}
+
+		if (seed == 12){
+			//fs = fahrenheit.split('');
+			//cs = canticle.split('');
+
+			explanation = "Brother Sarl has 'worked out a mathematical method for finding the missing words. It's not foolproof, but it works to some degree.'";
+
+			 txt = fahrenheit + canticle;
+			$(".mod").text('Brother Sarl II');
+
+			 list = txt.split("");			
+			var data = new Object;
+
+			// make the database
+			for (var d = 0; d <= list.length; d++){  
+				if (typeof data[list[d]] == 'undefined'){
+					data[list[d]] = [];
+				}			
+				data[list[d]].push(list[d+1]);
+			}
+			//console.log(data);
+
+			// make a string
+			
+			var seed = list[Math.floor(Math.random() * list.length)];
+			console.log(seed);
+			var newtxt = [seed];
+			while (newtxt.length < list.length & typeof data[seed] != 'undefined' & seed != 'undefined'){
+				var next = data[seed][Math.floor(Math.random() * data[seed].length) ];
+			
+					newtxt.push(next);
+					seed = next;
+				
+			}
+			for(var n = 0; n < newtxt.length; n++){
+				if (String(newtxt[n]) !== 'undefined'){
+					if (n < newtxt.length / 2){
+						$('.page.verso').append(newtxt[n] + "");
+					}else{
+						$('.page.recto').append(newtxt[n] + "");
+					}
+				}
+			}
+			
+		}
+
+		 for (i = 0; i <= 140; i++){
+
+
+		 	$('.page.verso').append(cs[i] + ' ' + fs[i] + ' ');
+		 }
+
+		for (i = 141; i <= 281; i++){
+		 	$('.page.recto').append(cs[i] + ' ' + fs[i] + ' ');
+
+		}
+		$('.page.recto').append("<div id='fn'><hr />1.&nbsp;&nbsp;&nbsp;&nbsp;<span id='footnote'>" + explanation + "</span></div>");
+
+		$('a.perm').attr('href', '?lod=' + seed);
+
+	});
+
+
+</script>
+<style>
+	body {background-color: #353535;
+		font-family: Georgia;
+		line-height: 1.5em;
+		color: #333;
+		font-family: 'Goudy Bookletter 1911', Georgia, serif;
+	}
+	.page {
+		width: 400px;
+		padding: 80px;
+		border: 1px solid black;
+		box-shadow: 2px 2px 5px black;
+		margin: 0 auto;
+		background-color: #F6E6CE;
+		margin-top: 20px;
+		margin-bottom: 200px;
+		float: left;
+		height: 750px;
+	}
+
+	.pages {
+
+		width: 1200px;
+		margin: 0 auto;
+	}
+	h2 {text-align:right; margin-bottom: 2em; font-family: 'Alef'; margin-top:0px;}
+	a.nom {text-decoration: none; color:#990000;margin-top:-5px; display: block; border:none;}
+	.version {
+		font-style: italic;
+		
+		font-weight: normal;
+		font-size: 100%;
+	}
+	#fn {
+		font-weight: normal;
+		font-family: 'Alef';
+		font-size: 80%;
+
+	}
+	a {color: #222; border-bottom:2px solid #333; text-decoration:none;}
+</style>
+</head>
+<body>
+	<div class="pages">
+<div class="page verso">
+	<h2 style="float:left"><a class="nom" href="101.html" title="Click to load another mix.">101</a></h2>
+<h2 style="text-align: right" class="version"><a href="http://booksafterbooks.tumblr.com/mediations#one" title="An explanation of the assignment that generated this page.">Fahrenheit 451 + Canticle for Leibowitz</a></h2>
+<br style="clear: both"/>
+</div>
+
+<div class="page recto">
+	<h2 style="float:right"><a class="nom" href="101.html" title="Click to load another mix.">101</a></h2>
+<h2 style="text-align: left" class="version"><a href="" title="Permalink to this mix." class="perm"><span class="mod"></span></a><sup style="font-style: normal"> 1</sup>  </h2>
+<br style="clear: both"/>
+
+</div>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-33196941-2', 'zachwhalen.net');
+  ga('send', 'pageview');
+
+</script>
+</body>
